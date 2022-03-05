@@ -18,6 +18,9 @@ export function deactivate() {
 }
 
 function refresh() {
-	vscode.window.showInformationMessage('kfront DISPLAY Refresh');
-	console.log('kfront DISPLAY Refresh');
+
+	let refreshLog: string = 'kfront DISPLAY Refresh, khub url = ' + vscode.workspace.getConfiguration('khub').get('backendUrl');
+
+	vscode.window.showInformationMessage(refreshLog);
+	console.log(refreshLog);
 }

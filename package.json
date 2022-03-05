@@ -15,6 +15,25 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": [
+			{
+				"title": "KFRONT",
+				"properties": {
+					"khub.backendUrl": {
+						"type": "string",
+						"default": false
+					}
+				}
+			}
+		],
+		"views":{
+			"explorer": [
+				{
+					"id": "kfrontTreeView",
+					"name": "Remotes K8S systems"
+				}
+			]
+		},			
 		"commands": [
 			{
 				"command": "kfront.refresh",
