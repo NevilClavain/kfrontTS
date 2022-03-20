@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export function getStatus() {
+export function getStatus(callback: StatusSink) {
 
     console.log('getStatus() IN');
     let backendURL = vscode.workspace.getConfiguration('khub').get('backendUrl');
@@ -16,5 +16,11 @@ export function getStatus() {
 
     console.log('options hostname = ' + options.hostname);
 
+    let statusResult = new Object();
+
+    let test:string = 'hello world';
+
+    callback.display(test);
+    
     console.log('getStatus() OUT');
 }

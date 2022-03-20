@@ -5,6 +5,8 @@ import * as vscode from 'vscode';
 
 import * as backend from './backend';
 
+import { TreeStatusSink } from './treeStatusSink';
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -20,6 +22,7 @@ export function deactivate() {
 	console.log('kfront extension Deactivated');
 }
 
+
 function refresh() {
 
 	let refreshLog: string = 'kfront DISPLAY Refresh, khub url = ' + vscode.workspace.getConfiguration('khub').get('backendUrl');
@@ -27,5 +30,8 @@ function refresh() {
 	vscode.window.showInformationMessage(refreshLog);
 	console.log(refreshLog);
 
-	backend.getStatus();	
+	let treeStatus = new TreeStatusSink();
+
+	backend.getStatus(treeStatus);
 }
+
