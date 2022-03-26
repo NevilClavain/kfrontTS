@@ -1,4 +1,4 @@
 
 interface StatusSink {
-    display(statusResult: string): void;
+    display(statusResult: Object): void;
 }

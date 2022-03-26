@@ -17,10 +17,7 @@ export function getStatus(callback: StatusSink) {
     console.log('options hostname = ' + options.hostname);
 
     let statusResult = new Object();
-
-    let test:string = 'hello world';
-
-    callback.display(test);
+    callback.display(statusResult);
     
     console.log('getStatus() OUT');
 }

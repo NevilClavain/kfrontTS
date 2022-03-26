@@ -4,8 +4,8 @@ export class TreeStatusSink implements StatusSink {
     constructor() {        
     }
     
-    display(statusResult: string): void {
-        console.log('on status update !');
+    display(statusResult: Object): void {
+        console.log('on status update with an Object! : ' + statusResult);
     }    
 }
 
