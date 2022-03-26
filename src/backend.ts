@@ -17,12 +17,7 @@ export function getStatus(callback: StatusSink) {
     };
 
     console.log('options hostname = ' + opts.host);
-
-    /*
-    let statusResult = new Object();    
-    callback.display(statusResult);
-    */
-
+    
     var req = http.request(opts, function (res) {
         
         let chunks = '';    
@@ -30,9 +25,10 @@ export function getStatus(callback: StatusSink) {
             chunks += chunk;
         });
         res.on("end", function () {
+            //console.log('server response is ' + chunks);
 
-            console.log('server response is ' + chunks);
-
+            let statusResult = JSON.parse(chunks);
+            callback.display(statusResult);
         });        
         res.on("error", function (error) {  
 
