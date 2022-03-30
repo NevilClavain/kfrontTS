@@ -3,6 +3,7 @@
 	"displayName": "kfrontTS",
 	"description": "kfront prototype",
 	"version": "0.0.1",
+	"publisher": "E.Chaumont",
 	"engines": {
 		"vscode": "^1.63.2"
 	},
@@ -10,8 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
-        
+		"*"        
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -37,9 +37,22 @@
 		"commands": [
 			{
 				"command": "kfront.refresh",
-				"title": "kfront refresh"
+				"title": "kfront refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
 			}
-		]
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "kfront.refresh",
+					"when": "view == kfrontTreeView",
+					"group": "navigation"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
