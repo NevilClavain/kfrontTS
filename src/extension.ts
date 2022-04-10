@@ -6,6 +6,7 @@ import * as vscode from 'vscode';
 import * as backend from './backend';
 
 import { TreeStatusSink } from './treeStatusSink';
+import { TreeStatusView } from './treeStatusView';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('kfront extension activated');
 	context.subscriptions.push(vscode.commands.registerCommand('kfront.refresh', refresh));
+	new TreeStatusView(context);
 
 	refresh();
 }
