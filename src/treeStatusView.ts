@@ -25,6 +25,10 @@ export class TreeStatusView {
 
     public updateData() {
         this.treeDataProvider.updateData();
+
+        // mwai :-/ peut mieux faire ?
+        const treeDataProvider = this.treeDataProvider;
+        vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
     }
 }
 
