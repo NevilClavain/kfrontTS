@@ -3,8 +3,27 @@ import * as vscode from 'vscode';
 
 export class TreeStatusView {
 
-    treeDataProvider: StatusTreeDataProvider;
+    private static instance: TreeStatusView;
 
+    private treeDataProvider: StatusTreeDataProvider;
+
+    private constructor() {
+
+        console.log('TreeStatusView ctor');        
+        this.treeDataProvider = new StatusTreeDataProvider();
+        const treeDataProvider = this.treeDataProvider;
+        vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
+    }
+
+    public static getInstance(): TreeStatusView {
+
+        if(!TreeStatusView.instance) {
+            TreeStatusView.instance = new TreeStatusView();
+        }
+        return TreeStatusView.instance;
+    }
+
+    /*
 	constructor(context: vscode.ExtensionContext) {
         console.log('TreeStatusView ctor');
         
@@ -13,6 +32,7 @@ export class TreeStatusView {
         vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
 
     }
+    */
 
     public updateData() {
         this.treeDataProvider.updateData();

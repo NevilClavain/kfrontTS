@@ -14,7 +14,9 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('kfront extension activated');
 	context.subscriptions.push(vscode.commands.registerCommand('kfront.refresh', refresh));
-	new TreeStatusView(context);
+	
+	
+	//new TreeStatusView(context);
 
 	refresh();
 }
@@ -35,5 +37,7 @@ function refresh() {
 	let treeStatus = new TreeStatusSink();
 
 	backend.getStatus(treeStatus);
+
+	TreeStatusView.getInstance().updateData();
 }
 
