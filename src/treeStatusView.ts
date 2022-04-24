@@ -25,24 +25,27 @@ export class TreeStatusView {
 
     public updateData() {
         this.treeDataProvider.updateData();
-
-        // mwai :-/ peut mieux faire ?
-        const treeDataProvider = this.treeDataProvider;
-        vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
     }
 }
 
 class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
-    refreshCounter: any;
+    private _refreshCounter: any;
+    private _onDidChangeTreeData: vscode.EventEmitter<StatusNode | undefined | null | void> = new vscode.EventEmitter<StatusNode | undefined | null | void>();
+
+    readonly onDidChangeTreeData: vscode.Event<void | StatusNode | null | undefined> = this._onDidChangeTreeData.event;
 
     constructor() {
-        this.refreshCounter = 0;
+        this._refreshCounter = 0;
     }
 
     public updateData() {        
-        this.refreshCounter++;
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this.refreshCounter);
+        this._refreshCounter++;
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this._refreshCounter);
+        
+        // signal TreeView that StatusTreeDataProvider content was updated
+        // so TreeView display will be updated :)
+        this._onDidChangeTreeData.fire();
     }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
@@ -55,7 +58,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
 
         const rootStatusNode = new StatusNode("root bloody root", vscode.TreeItemCollapsibleState.Expanded);
-        const rootStatusNode2 = new StatusNode("m_refresh_counter = " + this.refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
+        const rootStatusNode2 = new StatusNode("m_refresh_counter = " + this._refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
 
         if( element) {
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren leafs');

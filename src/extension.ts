@@ -31,7 +31,6 @@ function refresh() {
 	console.log(refreshLog);
 
 	let treeStatus = new TreeStatusSink();
-
 	backend.getStatus(treeStatus);
 
 	TreeStatusView.getInstance().updateData();
