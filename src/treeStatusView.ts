@@ -3,16 +3,34 @@ import * as vscode from 'vscode';
 
 export class TreeStatusView {
 
+    treeDataProvider: StatusTreeDataProvider;
+
 	constructor(context: vscode.ExtensionContext) {
         console.log('TreeStatusView ctor');
-
-        const treeDataProvider = new StatusTreeDataProvider();
+        
+        this.treeDataProvider = new StatusTreeDataProvider();
+        const treeDataProvider = this.treeDataProvider;
         vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
+
     }
 
+    public updateData() {
+        this.treeDataProvider.updateData();
+    }
 }
 
 class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
+
+    refreshCounter: any;
+
+    constructor() {
+        this.refreshCounter = 0;
+    }
+
+    public updateData() {        
+        this.refreshCounter++;
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this.refreshCounter);
+    }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem');
@@ -24,7 +42,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
 
         const rootStatusNode = new StatusNode("root bloody root", vscode.TreeItemCollapsibleState.Expanded);
-        const rootStatusNode2 = new StatusNode("plop!", vscode.TreeItemCollapsibleState.Expanded);
+        const rootStatusNode2 = new StatusNode("m_refresh_counter = " + this.refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
 
         if( element) {
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren leafs');
