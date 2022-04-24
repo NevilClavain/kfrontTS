@@ -23,17 +23,6 @@ export class TreeStatusView {
         return TreeStatusView.instance;
     }
 
-    /*
-	constructor(context: vscode.ExtensionContext) {
-        console.log('TreeStatusView ctor');
-        
-        this.treeDataProvider = new StatusTreeDataProvider();
-        const treeDataProvider = this.treeDataProvider;
-        vscode.window.createTreeView('kfrontTreeView', { treeDataProvider });
-
-    }
-    */
-
     public updateData() {
         this.treeDataProvider.updateData();
     }
