@@ -14,10 +14,6 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	console.log('kfront extension activated');
 	context.subscriptions.push(vscode.commands.registerCommand('kfront.refresh', refresh));
-	
-	
-	//new TreeStatusView(context);
-
 	refresh();
 }
 
