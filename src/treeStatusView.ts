@@ -23,8 +23,8 @@ export class TreeStatusView {
         return TreeStatusView.instance;
     }
 
-    public updateData() {
-        this.treeDataProvider.updateData();
+    public updateData(statusResult: any) {
+        this.treeDataProvider.updateData(statusResult);
     }
 }
 
@@ -39,9 +39,17 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         this._refreshCounter = 0;
     }
 
-    public updateData() {        
+    public updateData(statusResult: any) {        
         this._refreshCounter++;
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this._refreshCounter);
+
+        console.log('obj length is *-> ' + statusResult.length );
+
+        console.log('   *-> ' + statusResult[0].hostId);
+        console.log('   *-> ' + statusResult[0].status.value);
+        console.log('   *-> ' + statusResult[0].helmChartsContent[0].id);
+        console.log('   *-> ' + statusResult[0].helmChartsContent[0].informations[0]);   
+
         
         // signal TreeView that StatusTreeDataProvider content was updated
         // so TreeView display will be updated :)
