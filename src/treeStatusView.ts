@@ -31,6 +31,9 @@ export class TreeStatusView {
 class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
     private _refreshCounter: any;
+    private _statusResult:   any;
+
+
     private _onDidChangeTreeData: vscode.EventEmitter<StatusNode | undefined | null | void> = new vscode.EventEmitter<StatusNode | undefined | null | void>();
 
     readonly onDidChangeTreeData: vscode.Event<void | StatusNode | null | undefined> = this._onDidChangeTreeData.event;
@@ -40,16 +43,19 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     }
 
     public updateData(statusResult: any) {        
+        
         this._refreshCounter++;
+
+        this._statusResult = statusResult;
+
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this._refreshCounter);
 
-        console.log('obj length is *-> ' + statusResult.length );
+        console.log('obj length is **-> ' + this._statusResult.length );
 
-        console.log('   *-> ' + statusResult[0].hostId);
-        console.log('   *-> ' + statusResult[0].status.value);
-        console.log('   *-> ' + statusResult[0].helmChartsContent[0].id);
-        console.log('   *-> ' + statusResult[0].helmChartsContent[0].informations[0]);   
-
+        console.log('   **-> ' + this._statusResult[0].hostId);
+        console.log('   **-> ' + this._statusResult[0].status.value);
+        console.log('   **-> ' + this._statusResult[0].helmChartsContent[0].id);
+        console.log('   **-> ' + this._statusResult[0].helmChartsContent[0].informations[0]);   
         
         // signal TreeView that StatusTreeDataProvider content was updated
         // so TreeView display will be updated :)
@@ -57,15 +63,15 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.label);    
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.getHostId());
 		return element;		
 	}
 
 	public getChildren(element?: StatusNode): Thenable<StatusNode[]> {
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
 
-        const rootStatusNode = new StatusNode("root bloody root", vscode.TreeItemCollapsibleState.Expanded);
-        const rootStatusNode2 = new StatusNode("m_refresh_counter = " + this._refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
+        const rootStatusNode = new StatusNode("id1", "root bloody root", vscode.TreeItemCollapsibleState.Expanded);
+        const rootStatusNode2 = new StatusNode("id2", "m_refresh_counter = " + this._refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
 
         if( element) {
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren leafs');
@@ -79,9 +85,17 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
 class StatusNode extends vscode.TreeItem {
 
-    constructor( public readonly label: string,
+    private _hostId: string;
+
+    constructor( public readonly hostId: string,
+                 public readonly label: string,
                  public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
                      
             super(label, collapsibleState);
+            this._hostId = hostId;
+    }
+
+    public getHostId() {
+        return this._hostId;
     }
 }
