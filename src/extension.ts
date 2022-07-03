@@ -1,12 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
-
 import * as backend from './backend';
-
 import { TreeStatusSink } from './treeStatusSink';
-import { TreeStatusView } from './treeStatusView';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -32,7 +28,5 @@ function refresh() {
 
 	let treeStatus = new TreeStatusSink();
 	backend.getStatus(treeStatus);
-
-	TreeStatusView.getInstance().updateData();
 }
 

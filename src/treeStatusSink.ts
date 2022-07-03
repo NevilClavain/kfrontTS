@@ -1,4 +1,6 @@
 
+import { TreeStatusView } from './treeStatusView';
+
 export class TreeStatusSink implements StatusSink {
 
     constructor() {        
@@ -12,7 +14,9 @@ export class TreeStatusSink implements StatusSink {
         console.log('   -> ' + statusResult[0].hostId);
         console.log('   -> ' + statusResult[0].status.value);
         console.log('   -> ' + statusResult[0].helmChartsContent[0].id);
-        console.log('   -> ' + statusResult[0].helmChartsContent[0].informations[0]);    
+        console.log('   -> ' + statusResult[0].helmChartsContent[0].informations[0]);   
+        
+        TreeStatusView.getInstance().updateData();
     }    
 }
 

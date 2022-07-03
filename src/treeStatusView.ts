@@ -49,8 +49,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem');
-
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.label);    
 		return element;		
 	}
 
