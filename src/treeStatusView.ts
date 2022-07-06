@@ -48,6 +48,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
         this._statusResult = statusResult;
 
+        /*
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this._refreshCounter);
 
         console.log('obj length is **-> ' + this._statusResult.length );
@@ -55,7 +56,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         console.log('   **-> ' + this._statusResult[0].hostId);
         console.log('   **-> ' + this._statusResult[0].status.value);
         console.log('   **-> ' + this._statusResult[0].helmChartsContent[0].id);
-        console.log('   **-> ' + this._statusResult[0].helmChartsContent[0].informations[0]);   
+        console.log('   **-> ' + this._statusResult[0].helmChartsContent[0].informations[0]);
+        */
         
         // signal TreeView that StatusTreeDataProvider content was updated
         // so TreeView display will be updated :)
@@ -68,6 +70,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 	}
 
 	public getChildren(element?: StatusNode): Thenable<StatusNode[]> {
+
+        /*
         console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
 
         const rootStatusNode = new StatusNode("id1", "root bloody root", vscode.TreeItemCollapsibleState.Expanded);
@@ -79,7 +83,24 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         } else {
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
             return Promise.resolve([rootStatusNode, rootStatusNode2]);
-        }		
+        }
+        */
+
+        if( element) {            
+            return Promise.resolve([]);
+        } else {
+
+            //console.log('obj length is **-> ' + this._statusResult.length );
+            let statusNodesArray: StatusNode[] = [];
+            
+            for(var i = 0; i < this._statusResult.length; i++) {
+
+                const remoteNode = new StatusNode(this._statusResult[i].hostId, this._statusResult[i].hostId, vscode.TreeItemCollapsibleState.Expanded);
+                statusNodesArray.push(remoteNode);
+            }
+            
+            return Promise.resolve(statusNodesArray);
+        }        
 	}    
 }
 
