@@ -33,6 +33,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     private _refreshCounter: any;
     private _statusResult:   any;
 
+    private static _aliveStatus: string = 'ALIVE';
+
 
     private _onDidChangeTreeData: vscode.EventEmitter<StatusNode | undefined | null | void> = new vscode.EventEmitter<StatusNode | undefined | null | void>();
 
@@ -95,7 +97,21 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             
             for(var i = 0; i < this._statusResult.length; i++) {
 
-                const remoteNode = new StatusNode(this._statusResult[i].hostId, this._statusResult[i].hostId, vscode.TreeItemCollapsibleState.Expanded);
+                let hostId: string = this._statusResult[i].hostId;
+                let statusValue: string = this._statusResult[i].status.value;
+                let statusValueReason: string = this._statusResult[i].status.reason;
+
+                let rootLabel: string = "";
+
+                if(statusValue === StatusTreeDataProvider._aliveStatus) {
+                    rootLabel = hostId + " - " + statusValue;
+                } else {
+                    rootLabel = hostId + " - " + statusValue + " (" + statusValueReason + ")";
+                }
+                
+
+
+                const remoteNode = new StatusNode(hostId, rootLabel, vscode.TreeItemCollapsibleState.Expanded);
                 statusNodesArray.push(remoteNode);
             }
             
