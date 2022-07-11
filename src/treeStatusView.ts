@@ -67,7 +67,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.getHostId());
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.getNodeId());
 		return element;		
 	}
 
@@ -90,10 +90,10 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
         if( element) {            
             
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getHostId());
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getNodeId());
 
 
-            
+
             return Promise.resolve([]);
 
         } else {
@@ -129,17 +129,17 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
 class StatusNode extends vscode.TreeItem {
 
-    private _hostId: string;
+    private _nodeId: string;
 
-    constructor( public readonly hostId: string,
+    constructor( public readonly nodeId: string,
                  public readonly label: string,
                  public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
                      
             super(label, collapsibleState);
-            this._hostId = hostId;
+            this._nodeId = nodeId;
     }
 
-    public getHostId() {
-        return this._hostId;
+    public getNodeId() {
+        return this._nodeId;
     }
 }
