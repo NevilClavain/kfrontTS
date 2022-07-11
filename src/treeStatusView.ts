@@ -92,9 +92,30 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getNodeId());
 
+            let statusNodesArray: StatusNode[] = [];
+
+            for(var i = 0; i < this._statusResult.length; i++) {
+
+                let hostId: string = this._statusResult[i].hostId;
+
+                if(hostId === element.getNodeId()) {
+
+                    //console.log('>>>>> FOUND');
+
+                    for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
+
+                        console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
+
+                        
+
+                    }
+                }
+            }
 
 
-            return Promise.resolve([]);
+            return Promise.resolve(statusNodesArray);
+
+            //return Promise.resolve([]);
 
         } else {
 
