@@ -73,9 +73,9 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
 	public getChildren(element?: StatusNode): Thenable<StatusNode[]> {
 
-        /*
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
-
+        
+        //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren');
+/*
         const rootStatusNode = new StatusNode("id1", "root bloody root", vscode.TreeItemCollapsibleState.Expanded);
         const rootStatusNode2 = new StatusNode("id2", "m_refresh_counter = " + this._refreshCounter, vscode.TreeItemCollapsibleState.Expanded);
 
@@ -86,11 +86,19 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
             return Promise.resolve([rootStatusNode, rootStatusNode2]);
         }
-        */
+  */      
 
         if( element) {            
+            
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getHostId());
+
+
+            
             return Promise.resolve([]);
+
         } else {
+
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
 
             //console.log('obj length is **-> ' + this._statusResult.length );
             let statusNodesArray: StatusNode[] = [];
@@ -109,14 +117,13 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                     rootLabel = hostId + " - " + statusValue + " (" + statusValueReason + ")";
                 }
                 
-
-
-                const remoteNode = new StatusNode(hostId, rootLabel, vscode.TreeItemCollapsibleState.Expanded);
+                const remoteNode = new StatusNode(hostId, rootLabel, vscode.TreeItemCollapsibleState.Collapsed);
                 statusNodesArray.push(remoteNode);
             }
             
             return Promise.resolve(statusNodesArray);
-        }        
+        }   
+          
 	}    
 }
 
