@@ -108,7 +108,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
                         let nodeId: string = this._statusResult[i].helmChartsContent[j].id;
                         
-                        const remoteNode = new StatusNode(nodeId, nodeId, vscode.TreeItemCollapsibleState.Collapsed);
+                        const remoteNode = new StatusNode(nodeId, nodeId, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
                         statusNodesArray.push(remoteNode);
                     }
                 }
@@ -139,7 +139,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                     rootLabel = hostId + " - " + statusValue + " (" + statusValueReason + ")";
                 }
                 
-                const remoteNode = new StatusNode(hostId, rootLabel, vscode.TreeItemCollapsibleState.Collapsed);
+                const remoteNode = new StatusNode(hostId, rootLabel, NodeType.host, vscode.TreeItemCollapsibleState.Collapsed);
                 statusNodesArray.push(remoteNode);
             }
             
@@ -149,19 +149,32 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 	}    
 }
 
+enum NodeType {
+    host,
+    deployment, 
+    deploymentDetails
+}
+
 class StatusNode extends vscode.TreeItem {
 
-    private _nodeId: string;
+    private _nodeId:    string;
+    private _nodeType : NodeType;
 
     constructor( public readonly nodeId: string,
                  public readonly label: string,
+                 public readonly type: NodeType,
                  public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
                      
             super(label, collapsibleState);
             this._nodeId = nodeId;
+            this._nodeType = type;
     }
 
     public getNodeId() {
         return this._nodeId;
+    }
+
+    public getNodeType() {
+        return this._nodeType;
     }
 }
