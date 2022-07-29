@@ -90,39 +90,41 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
         if( element) {            
             
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getNodeId());
+            //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren with id ' + element.getHostId());
 
-            let statusNodesArray: StatusNode[] = [];
+            if(element.getNodeType() === NodeType.host) {
 
-            for(var i = 0; i < this._statusResult.length; i++) {
+                let statusNodesArray: StatusNode[] = [];
 
-                let hostId: string = this._statusResult[i].hostId;
-
-                if(hostId === element.getNodeId()) {
-
-                    //console.log('>>>>> FOUND');
-
-                    for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
-
-                        //console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
-
-                        let nodeId: string = this._statusResult[i].helmChartsContent[j].id;
-                        
-                        const remoteNode = new StatusNode(nodeId, nodeId, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
-                        statusNodesArray.push(remoteNode);
+                for(var i = 0; i < this._statusResult.length; i++) {
+    
+                    let hostId: string = this._statusResult[i].hostId;
+    
+                    if(hostId === element.getHostId()) {
+    
+                        //console.log('>>>>> FOUND');
+    
+                        for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
+    
+                            //console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
+    
+                            let deploymentId: string = this._statusResult[i].helmChartsContent[j].id;
+                            
+                            const remoteNode = new StatusNode(hostId, deploymentId, deploymentId, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
+                            statusNodesArray.push(remoteNode);
+                        }
                     }
                 }
+                return Promise.resolve(statusNodesArray);    
             }
-
-
-            return Promise.resolve(statusNodesArray);
-
-            //return Promise.resolve([]);
+            else{
+                return Promise.resolve([]);
+            }
 
         } else {
 
             //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
-            //console.log('obj length is **-> ' + this._statusResult.length );
+            
             let statusNodesArray: StatusNode[] = [];
             
             for(var i = 0; i < this._statusResult.length; i++) {
@@ -139,7 +141,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                     rootLabel = hostId + " - " + statusValue + " (" + statusValueReason + ")";
                 }
                 
-                const remoteNode = new StatusNode(hostId, rootLabel, NodeType.host, vscode.TreeItemCollapsibleState.Collapsed);
+                const remoteNode = new StatusNode(hostId, "", rootLabel, NodeType.host, vscode.TreeItemCollapsibleState.Collapsed);
                 statusNodesArray.push(remoteNode);
             }
             
@@ -157,21 +159,29 @@ enum NodeType {
 
 class StatusNode extends vscode.TreeItem {
 
-    private _nodeId:    string;
-    private _nodeType : NodeType;
+    private _nodeType :     NodeType;
+    private _hostId:        string;
+    private _deploymentId:  string;
+    
 
-    constructor( public readonly nodeId: string,
+    constructor( public readonly hostId: string,
+                 public readonly deploymentId: string,
                  public readonly label: string,
                  public readonly type: NodeType,
                  public readonly collapsibleState: vscode.TreeItemCollapsibleState) {
                      
             super(label, collapsibleState);
-            this._nodeId = nodeId;
+            this._hostId = hostId;
+            this._deploymentId = deploymentId;
             this._nodeType = type;
     }
 
-    public getNodeId() {
-        return this._nodeId;
+    public getHostId() {
+        return this._hostId;
+    }
+
+    public getDeploymentId() {
+        return this._deploymentId;
     }
 
     public getNodeType() {
