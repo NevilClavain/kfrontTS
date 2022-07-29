@@ -67,7 +67,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     }
 
 	public getTreeItem(element: StatusNode): vscode.TreeItem {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.getNodeId());
+        //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getTreeItem : ' + element.getNodeId());
 		return element;		
 	}
 
@@ -104,10 +104,12 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
                     for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
 
-                        console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
+                        //console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
 
+                        let nodeId: string = this._statusResult[i].helmChartsContent[j].id;
                         
-
+                        const remoteNode = new StatusNode(nodeId, nodeId, vscode.TreeItemCollapsibleState.Collapsed);
+                        statusNodesArray.push(remoteNode);
                     }
                 }
             }
@@ -119,8 +121,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
         } else {
 
-            console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
-
+            //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
             //console.log('obj length is **-> ' + this._statusResult.length );
             let statusNodesArray: StatusNode[] = [];
             
