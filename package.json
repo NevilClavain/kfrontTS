@@ -42,6 +42,10 @@
 					"light": "resources/light/refresh.svg",
 					"dark": "resources/dark/refresh.svg"
 				}
+			},
+			{
+				"command": "kfront.uninstall_deployment",
+				"title": "Uninstall"	
 			}
 		],
 		"menus": {
@@ -50,6 +54,12 @@
 					"command": "kfront.refresh",
 					"when": "view == kfrontTreeView",
 					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "kfront.uninstall_deployment",
+					"when": "view == kfrontTreeView && viewItem == deployment"
 				}
 			]
 		}
