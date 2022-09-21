@@ -36,7 +36,7 @@ function refresh() {
 
 function uninstallDeployment(node: StatusNode) {
 
-	let uninstallLog: string = 'uninstall deployment : ' + node.getDeploymentId() + ' from ' + node.getHostId();	
+	let uninstallLog: string = 'uninstall deployment : ' + node.getHelmChartId() + ' from ' + node.getHostId();	
 
 	vscode.window.showInformationMessage(uninstallLog);
 	console.log(uninstallLog);
