@@ -30,7 +30,6 @@ export class TreeStatusView {
 
 class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
-    private _refreshCounter: any;
     private _statusResult:   any;
 
     private static _aliveStatus: string = 'ALIVE';
@@ -41,17 +40,14 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
     readonly onDidChangeTreeData: vscode.Event<void | StatusNode | null | undefined> = this._onDidChangeTreeData.event;
 
     constructor() {
-        this._refreshCounter = 0;
     }
 
     public updateData(statusResult: any) {        
         
-        this._refreshCounter++;
-
         this._statusResult = statusResult;
 
         /*
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData : refreshCounter = ' + this._refreshCounter);
+        console.log('>>>>>>>>>>>>>>>>>>>>>>>>> updateData');
 
         console.log('obj length is **-> ' + this._statusResult.length );
 
@@ -94,15 +90,16 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             if(element.getNodeType() === NodeType.host) {
 
                 let statusNodesArray: StatusNode[] = [];
+                let hosts = this._statusResult.hosts;
 
-                for(var i = 0; i < this._statusResult.length; i++) {
+                for(var i = 0; i < hosts.length; i++) {
     
-                    let hostId: string = this._statusResult[i].hostId;
+                    let hostId: string = hosts[i].hostId;
                     
                     if(hostId === element.getHostId()) {
-                        for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
+                        for(var j = 0; j < hosts[i].helmChartsContent.length; j++) {
         
-                            let deploymentId: string = this._statusResult[i].helmChartsContent[j].id;
+                            let deploymentId: string = hosts[i].helmChartsContent[j].id;
                             
                             const remoteNode = new StatusNode(hostId, deploymentId, deploymentId, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
                             remoteNode.contextValue = "deployment";
@@ -116,23 +113,24 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             else if(element.getNodeType() === NodeType.deployment) {
 
                 let statusNodesArray: StatusNode[] = [];
+                let hosts = this._statusResult.hosts;
 
-                for(var i = 0; i < this._statusResult.length; i++) {
+                for(var i = 0; i < hosts.length; i++) {
     
-                    let hostId: string = this._statusResult[i].hostId;
+                    let hostId: string = hosts[i].hostId;
 
                     if(hostId === element.getHostId()) {
-                        for(var j = 0; j < this._statusResult[i].helmChartsContent.length; j++) {
+                        for(var j = 0; j < hosts[i].helmChartsContent.length; j++) {
     
-                            //console.log('   **-> ' + this._statusResult[i].helmChartsContent[j].id);
+                            //console.log('   **-> ' + hosts[i].helmChartsContent[j].id);
     
-                            let deploymentId: string = this._statusResult[i].helmChartsContent[j].id;
+                            let deploymentId: string = hosts[i].helmChartsContent[j].id;
 
                             if(deploymentId === element.getDeploymentId()) {
 
-                                for(var k = 0; k < this._statusResult[i].helmChartsContent[j].informations.length; k++) {
+                                for(var k = 0; k < hosts[i].helmChartsContent[j].informations.length; k++) {
                                   
-                                    let informations: string = this._statusResult[i].helmChartsContent[j].informations[k];
+                                    let informations: string = hosts[i].helmChartsContent[j].informations[k];
 
                                     if(informations[0] !== '\n') { // dont keep '\n only' lines
                                         const remoteNode = new StatusNode(hostId, deploymentId, informations, NodeType.deploymentInformations, vscode.TreeItemCollapsibleState.Collapsed);
@@ -156,12 +154,13 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             //console.log('>>>>>>>>>>>>>>>>>>>>>>>>> getChildren root');
             
             let statusNodesArray: StatusNode[] = [];
+            let hosts = this._statusResult.hosts;
             
-            for(var i = 0; i < this._statusResult.length; i++) {
+            for(var i = 0; i < hosts.length; i++) {
 
-                let hostId: string = this._statusResult[i].hostId;
-                let statusValue: string = this._statusResult[i].status.value;
-                let statusValueReason: string = this._statusResult[i].status.reason;
+                let hostId: string = hosts[i].hostId;
+                let statusValue: string = hosts[i].status.value;
+                let statusValueReason: string = hosts[i].status.reason;
 
                 let rootLabel: string = "";
 
