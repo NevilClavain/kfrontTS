@@ -16,6 +16,8 @@ export function getStatus(callback: StatusSink) {
         }
     };
 
+    let requestDescr : String = opts.method + " " + opts.path;
+
     console.log('options hostname = ' + opts.host);
     
     var req = http.request(opts, function (res) {
@@ -25,15 +27,19 @@ export function getStatus(callback: StatusSink) {
             chunks += chunk;
         });
         res.on("end", function () {
-            //console.log('server response is ' + chunks);
+            
+            //vscode.window.showInformationMessage("get status request SUCCESS");
+
+            
+            vscode.window.showInformationMessage(requestDescr + " SUCCESSFUL");
 
             let statusResult = JSON.parse(chunks);
             callback.display(statusResult);
         });        
-        res.on("error", function (error) {  
+        res.on("error", function (error) {
 
-            console.log('unexpected error: ' + res); 
-            vscode.window.showErrorMessage('kfront:' + res);     
+            console.log('unexpected error: ' + res);
+            vscode.window.showErrorMessage(requestDescr + " FAILURE : " + error);    
         });
         
     });

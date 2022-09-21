@@ -27,7 +27,7 @@ function refresh() {
 
 	let refreshLog: string = 'kfront DISPLAY Refresh, khub url = ' + vscode.workspace.getConfiguration('khub').get('backendUrl');
 
-	vscode.window.showInformationMessage(refreshLog);
+	//vscode.window.showInformationMessage(refreshLog);
 	console.log(refreshLog);
 
 	let treeStatus = new TreeStatusSink();
@@ -38,7 +38,7 @@ function uninstallDeployment(node: StatusNode) {
 
 	let uninstallLog: string = 'uninstall deployment : ' + node.getHelmChartId() + ' from ' + node.getHostId();	
 
-	vscode.window.showInformationMessage(uninstallLog);
+	//vscode.window.showInformationMessage(uninstallLog);
 	console.log(uninstallLog);
 }
 
