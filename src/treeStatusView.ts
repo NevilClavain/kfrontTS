@@ -101,8 +101,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
         
                             let deploymentId: string = hosts[i].helmChartsContent[j].id;
                             
-                            const remoteNode = new StatusNode(hostId, deploymentId, deploymentId, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
-                            remoteNode.contextValue = "deployment";
+                            const remoteNode = new StatusNode(hostId, deploymentId, deploymentId, NodeType.helmChart, vscode.TreeItemCollapsibleState.Collapsed);
+                            remoteNode.contextValue = "helmChart";
 
                             statusNodesArray.push(remoteNode);
                         }
@@ -110,7 +110,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                 }
                 return Promise.resolve(statusNodesArray);
             }
-            else if(element.getNodeType() === NodeType.deployment) {
+            else if(element.getNodeType() === NodeType.helmChart) {
 
                 let statusNodesArray: StatusNode[] = [];
                 let hosts = this._statusResult.hosts;
@@ -133,8 +133,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                                     let informations: string = hosts[i].helmChartsContent[j].informations[k];
 
                                     if(informations[0] !== '\n') { // dont keep '\n only' lines
-                                        const remoteNode = new StatusNode(hostId, deploymentId, informations, NodeType.deploymentInformations, vscode.TreeItemCollapsibleState.Collapsed);
-                                        remoteNode.contextValue = "deploymentInformations";
+                                        const remoteNode = new StatusNode(hostId, deploymentId, informations, NodeType.helmChartInformations, vscode.TreeItemCollapsibleState.Collapsed);
+                                        remoteNode.contextValue = "helmChartInformations";
 
                                         statusNodesArray.push(remoteNode);    
                                     }
@@ -184,8 +184,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
 enum NodeType {
     host,
-    deployment, 
-    deploymentInformations
+    helmChart, 
+    helmChartInformations
 }
 
 export class StatusNode extends vscode.TreeItem {

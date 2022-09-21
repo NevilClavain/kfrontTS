@@ -59,7 +59,7 @@
 			"view/item/context": [
 				{
 					"command": "kfront.uninstall_deployment",
-					"when": "view == kfrontTreeView && viewItem == deployment"
+					"when": "view == kfrontTreeView && viewItem == helmChart"
 				}
 			]
 		}
