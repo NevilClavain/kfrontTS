@@ -133,7 +133,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                                     let informations: string = hosts[i].helmChartsContent[j].informations[k];
 
                                     if(informations[0] !== '\n') { // dont keep '\n only' lines
-                                        const remoteNode = new StatusNode(hostId, deploymentId, "", informations, NodeType.helmChartInformations, vscode.TreeItemCollapsibleState.Collapsed);
+                                        const remoteNode = new StatusNode(hostId, deploymentId, "", informations, NodeType.helmChartInformations, vscode.TreeItemCollapsibleState.None);
                                         remoteNode.contextValue = "helmChartInformations";
 
                                         statusNodesArray.push(remoteNode);    
@@ -166,9 +166,9 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                 let rootLabel: string = "";
 
                 if(statusValue === StatusTreeDataProvider._aliveStatus) {
-                    rootLabel = hostId + " - " + statusValue;
+                    rootLabel = "Host : " + hostId + " - " + statusValue;
                 } else {
-                    rootLabel = hostId + " - " + statusValue + " (" + statusValueReason + ")";
+                    rootLabel = "Host : " + hostId + " - " + statusValue + " (" + statusValueReason + ")";
                 }
                 
                 const remoteNode = new StatusNode(hostId, "", "", rootLabel, NodeType.host, vscode.TreeItemCollapsibleState.Collapsed);
@@ -182,7 +182,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             for(var i = 0; i < deployments.length; i++) {
 
                 let alias: string = deployments[i].alias;
-                const deployment = new StatusNode("", "", alias, alias, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
+                const deployment = new StatusNode("", "", alias, "Deployment :" + alias, NodeType.deployment, vscode.TreeItemCollapsibleState.None);
 
                 deployment.contextValue = "deployment";
 
