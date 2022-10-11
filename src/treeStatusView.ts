@@ -143,9 +143,33 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                         }
                     }
                 }
-                return Promise.resolve(statusNodesArray);                
-            }
-            else {
+                return Promise.resolve(statusNodesArray);
+
+            } else if(element.getNodeType() === NodeType.deployment) {
+
+                let statusNodesArray: StatusNode[] = [];                
+                let deployments = this._statusResult.deployments;
+
+                for(var i = 0; i < deployments.length; i++) {
+    
+                    let alias: string = deployments[i].alias;
+                    
+                    if(alias === element.getDeploymentAlias()) {
+
+                        for(var j = 0; j < deployments[i].availableDeploymentType.length; j++) {
+
+                            let depType: string = deployments[i].availableDeploymentType[j];
+                            const deploymentTypeNode = new StatusNode("", "", depType, depType, NodeType.deploymentType, vscode.TreeItemCollapsibleState.Collapsed);
+                            deploymentTypeNode.contextValue = "deploymentType";
+                            statusNodesArray.push(deploymentTypeNode);    
+                        }
+
+                    }                                    
+                }
+                return Promise.resolve(statusNodesArray);
+
+            } else {
+
                 return Promise.resolve([]);
             }
 
@@ -182,7 +206,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
             for(var i = 0; i < deployments.length; i++) {
 
                 let alias: string = deployments[i].alias;
-                const deployment = new StatusNode("", "", alias, "Deployment :" + alias, NodeType.deployment, vscode.TreeItemCollapsibleState.None);
+                const deployment = new StatusNode("", "", alias, alias, NodeType.deployment, vscode.TreeItemCollapsibleState.Collapsed);
 
                 deployment.contextValue = "deployment";
 
@@ -199,6 +223,8 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 enum NodeType {
     host,
     deployment,
+    deploymentType,
+    deploymentTarget, // to be continued...
     helmChart, 
     helmChartInformations
 }
