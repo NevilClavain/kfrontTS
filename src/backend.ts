@@ -10,6 +10,7 @@ export function getStatus(callback: StatusSink) {
     let opts: RequestOptions = {
         'method': 'GET',        
         'host': backendURL,
+        'port':9080,
         //'host': 'www.google.fr',
         'path': '/v1/khub/content',
         'headers': {
