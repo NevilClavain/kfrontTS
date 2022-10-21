@@ -22,6 +22,10 @@
 					"khub.backendUrl": {
 						"type": "string",
 						"default": false
+					},
+					"khub.backendPort": {
+						"type": "integer",
+						"default": false
 					}
 				}
 			}

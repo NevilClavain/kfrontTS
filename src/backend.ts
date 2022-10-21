@@ -6,16 +6,17 @@ export function getStatus(callback: StatusSink) {
 
     console.log('getStatus() IN');
     let backendURL = vscode.workspace.getConfiguration('khub').get<string>('backendUrl');
+    let backendPort = vscode.workspace.getConfiguration('khub').get<string>('backendPort');
 
     let opts: RequestOptions = {
         'method': 'GET',        
         'host': backendURL,
-        'port':9080,
+        'port':backendPort,
         //'host': 'www.google.fr',
         'path': '/v1/khub/content',
         'headers': {
             'accept': '*/*',
-            'host': backendURL + ':' + '9080'
+            'host': backendURL + ':' + backendPort
         }
     };
 
