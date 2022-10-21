@@ -21,11 +21,15 @@
 				"properties": {
 					"khub.backendUrl": {
 						"type": "string",
-						"default": false
+						"default": "127.0.0.1"
 					},
 					"khub.backendPort": {
 						"type": "integer",
-						"default": false
+						"default": 9080
+					},
+					"khub.getEndPoint": {
+						"type": "string",
+						"default": "/v1/khub/content"
 					}
 				}
 			}
