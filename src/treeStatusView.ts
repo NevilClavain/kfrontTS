@@ -147,7 +147,7 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
 
             } else if(element.getNodeType() === NodeType.deployment) {
 
-                let statusNodesArray: StatusNode[] = [];                
+                let statusNodesArray: StatusNode[] = [];
                 let deployments = this._statusResult.deployments;
 
                 for(var i = 0; i < deployments.length; i++) {
@@ -161,10 +161,26 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                             let depType: string = deployments[i].availableDeploymentType[j];
                             const deploymentTypeNode = new StatusNode("", "", depType, depType, NodeType.deploymentType, vscode.TreeItemCollapsibleState.Collapsed);
                             deploymentTypeNode.contextValue = "deploymentType";
-                            statusNodesArray.push(deploymentTypeNode);    
+                            statusNodesArray.push(deploymentTypeNode);
                         }
 
                     }                                    
+                }
+                return Promise.resolve(statusNodesArray);
+
+            } else if(element.getNodeType() === NodeType.deploymentType) {
+
+                let statusNodesArray: StatusNode[] = [];
+
+                // collect hosts
+                let hosts = this._statusResult.hosts;
+                for(var i = 0; i < hosts.length; i++) {
+
+                    let hostId: string = hosts[i].hostId;
+
+                    const deploymentTargetNode = new StatusNode("", "", hostId, hostId, NodeType.deploymentTarget, vscode.TreeItemCollapsibleState.Collapsed);
+                    deploymentTargetNode.contextValue = "deploymentTarget";
+                    statusNodesArray.push(deploymentTargetNode);    
                 }
                 return Promise.resolve(statusNodesArray);
 
