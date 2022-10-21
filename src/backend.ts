@@ -14,6 +14,8 @@ export function getStatus(callback: StatusSink) {
         //'host': 'www.google.fr',
         'path': '/v1/khub/content',
         'headers': {
+            'accept': '*/*',
+            'host': backendURL + ':' + '9080'
         }
     };
 
@@ -27,12 +29,8 @@ export function getStatus(callback: StatusSink) {
         res.on("data", function (chunk) {            
             chunks += chunk;
         });
-        res.on("end", function () {
-            
-            //vscode.window.showInformationMessage("get status request SUCCESS");
-
-            
-            vscode.window.showInformationMessage(requestDescr + " SUCCESSFUL");
+        res.on("end", function () {                                    
+            vscode.window.showInformationMessage(requestDescr + " returned " + res.statusCode);
 
             let statusResult = JSON.parse(chunks);
             callback.display(statusResult);
