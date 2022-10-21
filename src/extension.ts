@@ -12,6 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('kfront extension activated');
 
 	context.subscriptions.push(vscode.commands.registerCommand('kfront.refresh', refresh));
+	context.subscriptions.push(vscode.commands.registerCommand('kfront.install_deployment', installDeployment));
 	context.subscriptions.push(vscode.commands.registerCommand('kfront.uninstall_deployment', uninstallDeployment));
 
 	refresh();
@@ -34,11 +35,15 @@ function refresh() {
 	backend.getStatus(treeStatus);
 }
 
+function installDeployment(node: StatusNode) {
+
+	let installLog: string = 'install deployment : ' + node.getDeploymentAlias() + ", " + node.getDeploymentType() + ' to ' + node.getHostId();	
+	console.log(installLog);
+}
+
 function uninstallDeployment(node: StatusNode) {
 
 	let uninstallLog: string = 'uninstall deployment : ' + node.getHelmChartId() + ' from ' + node.getHostId();	
-
-	//vscode.window.showInformationMessage(uninstallLog);
 	console.log(uninstallLog);
 }
 
