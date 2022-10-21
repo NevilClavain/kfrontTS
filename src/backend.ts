@@ -11,7 +11,7 @@ export function getStatus(callback: StatusSink) {
         'method': 'GET',        
         'host': backendURL,
         //'host': 'www.google.fr',
-        'path': '/status',
+        'path': '/v1/khub/content',
         'headers': {
         }
     };
