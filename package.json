@@ -2,7 +2,7 @@
   "name": "kfrontts",
 	"displayName": "kfrontTS",
 	"description": "kfront prototype",
-	"version": "0.0.1",
+	"version": "0.0.8",
 	"publisher": "E.Chaumont",
 	"engines": {
 		"vscode": "^1.63.2"
