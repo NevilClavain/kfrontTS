@@ -125,15 +125,18 @@ class StatusTreeDataProvider implements vscode.TreeDataProvider<StatusNode> {
                             //console.log('   **-> ' + hosts[i].helmChartsContent[j].id);
     
                             let deploymentId: string = hosts[i].helmChartsContent[j].id;
-
+                        
                             if(deploymentId === element.getHelmChartId()) {
 
                                 for(var k = 0; k < hosts[i].helmChartsContent[j].informations.length; k++) {
                                   
-                                    let informations: string = hosts[i].helmChartsContent[j].informations[k];
-
+                                    let informations: string = hosts[i].helmChartsContent[j].informations[k];                                
                                     if(informations[0] !== '\n') { // dont keep '\n only' lines
-                                        const remoteNode = new StatusNode(hostId, deploymentId, "", "", informations, NodeType.helmChartInformations, vscode.TreeItemCollapsibleState.Collapsed);
+
+                                        // cleanup string
+                                        informations = informations.replace(/(\r\n|\n|\r)/gm, "");
+                                        
+                                        const remoteNode = new StatusNode(hostId, deploymentId, "", "", informations, NodeType.helmChartInformations, vscode.TreeItemCollapsibleState.None);
                                         remoteNode.contextValue = "helmChartInformations";
 
                                         statusNodesArray.push(remoteNode);    
