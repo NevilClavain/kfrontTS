@@ -2,19 +2,28 @@ import * as vscode from 'vscode';
 import * as http from 'http';
 import { RequestOptions } from 'https';
 
+export function deploy() {
+    
+    console.log('deploy() IN');
+
+
+
+    console.log('deploy() OUT');
+}
+
 export function getStatus(callback: StatusSink) {
 
     console.log('getStatus() IN');
     let backendURL = vscode.workspace.getConfiguration('khub').get<string>('backendUrl');
     let backendPort = vscode.workspace.getConfiguration('khub').get<string>('backendPort');
-    let getEndPoint = vscode.workspace.getConfiguration('khub').get<string>('getEndPoint');
+    let endPoint = vscode.workspace.getConfiguration('khub').get<string>('endPoint');
 
     let opts: RequestOptions = {
         'method': 'GET',        
         'host': backendURL,
         'port':backendPort,
         //'host': 'www.google.fr',
-        'path': getEndPoint,
+        'path': endPoint,
         'headers': {
             'accept': '*/*',
             'host': backendURL + ':' + backendPort

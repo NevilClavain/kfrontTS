@@ -27,7 +27,7 @@
 						"type": "integer",
 						"default": 9080
 					},
-					"khub.getEndPoint": {
+					"khub.endPoint": {
 						"type": "string",
 						"default": "/v1/khub/content"
 					}
