@@ -39,11 +39,15 @@ function installDeployment(node: StatusNode) {
 
 	let installLog: string = 'install deployment : ' + node.getDeploymentAlias() + ", " + node.getDeploymentType() + ' to ' + node.getHostId();	
 	console.log(installLog);
+
+	backend.deploy(node.getHostId(), node.getDeploymentAlias(), node.getDeploymentType());
 }
 
 function uninstallDeployment(node: StatusNode) {
 
 	let uninstallLog: string = 'uninstall deployment : ' + node.getHelmChartId() + ' from ' + node.getHostId();	
 	console.log(uninstallLog);
+
+	backend.remove(node.getHostId(), node.getHelmChartId());
 }
 
