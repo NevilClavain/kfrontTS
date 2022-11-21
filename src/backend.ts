@@ -11,7 +11,7 @@ export function deploy(host: string, app:string, mode:string) {
     let endPoint = vscode.workspace.getConfiguration('khub').get<string>('endPoint');
 
     let opts: RequestOptions = {
-        'method': 'GET',        
+        'method': 'PUT',        
         'host': backendURL,
         'port':backendPort,        
         'path': endPoint + '/' + host + '?operation=install&comp=' + app + '&category=' + mode,
@@ -60,7 +60,7 @@ export function remove(host: string, app:string) {
     let endPoint = vscode.workspace.getConfiguration('khub').get<string>('endPoint');
 
     let opts: RequestOptions = {
-        'method': 'GET',        
+        'method': 'PUT',        
         'host': backendURL,
         'port':backendPort,        
         'path': endPoint + '/' + host + '?operation=uninstall&comp=' + app,
